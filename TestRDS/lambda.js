@@ -3,7 +3,7 @@ let connectionManager = require('./ConnectionManager');
 let SL_AWS = require('slappforge-sdk-aws');
 const rds = new SL_AWS.RDS(connectionManager);
 exports.handler = function (event, context, callback) {
-	let email = event.queryStringParameters.email;
+	let email = event.email;
 
 
 	// You can pass the existing connection to this function.
@@ -11,8 +11,8 @@ exports.handler = function (event, context, callback) {
 	// You must always end/destroy the DB connection after it's used
 	rds.query({
 		instanceIdentifier: 'TestRDS',
-		query: 'INSERT INTO employee(email)',
-		inserts: ['emaila']
+		query: 'INSERT INTO employee(email) VALUES (?);',
+		inserts: email
 	}, function (error, results, connection) {
 		if (error) {
 			console.log("Error occurred");

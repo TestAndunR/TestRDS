@@ -15,14 +15,16 @@ exports.handler = function (event, context, callback) {
 		inserts: email
 	}, function (error, results, connection) {
 		if (error) {
+			response = error;
 			console.log("Error occurred");
 			throw error;
 		} else {
-			console.log("Success")
-			console.log(results);
+			response = "Successfully added a new entry";
+			console.log("Success");
 		}
-
 		connection.end();
+		callback(null,response);
+		
 	});
 
 
